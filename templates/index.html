@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time Credit Risk Monitor</title>
+  <meta name="description" content="Machine Learning powered real-time credit risk monitoring dashboard for instant default probability scoring and automated tier assessment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- ░░ HERO HEADER ░░ -->
+  <header class="hero-container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-icon">💳</div>
+        <div>
+          <h1 class="hero-title">Real-Time Credit Risk Monitoring System</h1>
+          <p class="hero-subtitle">Machine Learning Powered Credit Scoring &nbsp;•&nbsp; Instant Default Probability &nbsp;•&nbsp; Automated Tier Assessment</p>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        LIVE
+      </div>
+    </div>
+  </header>
+
+  <!-- ░░ TAB NAV ░░ -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true"  data-tab="assess"   id="tab-assess">⚡ Instant Risk Assessment</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" data-tab="metrics"  id="tab-metrics">📊 Model Comparison &amp; Metrics</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" data-tab="pipeline" id="tab-pipeline">🔄 Pipeline Architecture</button>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░ TAB 1 — RISK ASSESSMENT ░░░░░░░░░░░░░░░░░░░░ -->
+    <section class="tab-panel active" id="panel-assess" role="tabpanel" aria-labelledby="tab-assess">
+      <div class="two-col-grid">
+
+        <!-- LEFT: Form -->
+        <div class="form-col">
+          <h2 class="section-title">👤 Applicant &amp; Loan Details</h2>
+
+          <!-- Preset buttons -->
+          <p class="preset-label">Quick Demo Presets:</p>
+          <div class="preset-row">
+            <button class="preset-btn preset-prime   active" id="btn-prime"    data-preset="prime">🟢 Prime Borrower</button>
+            <button class="preset-btn preset-moderate"       id="btn-moderate" data-preset="moderate">🟡 Moderate Risk</button>
+            <button class="preset-btn preset-high"           id="btn-high"     data-preset="high">🔴 High Risk</button>
+          </div>
+
+          <form id="loan-form" novalidate>
+
+            <div class="form-section-title">1. Demographics &amp; Financials</div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="person_age">Age (Years)</label>
+                <input type="number" id="person_age" name="person_age" min="18" max="85" step="1" required />
+              </div>
+              <div class="form-group">
+                <label for="person_income">Annual Income ($)</label>
+                <input type="number" id="person_income" name="person_income" min="1000" max="2000000" step="5000" required />
+              </div>
+              <div class="form-group">
+                <label for="person_home_ownership">Home Ownership</label>
+                <select id="person_home_ownership" name="person_home_ownership">
+                  <option value="RENT">RENT</option>
+                  <option value="MORTGAGE">MORTGAGE</option>
+                  <option value="OWN">OWN</option>
+                  <option value="OTHER">OTHER</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="person_emp_length">Employment Length (Years)</label>
+                <input type="number" id="person_emp_length" name="person_emp_length" min="0" max="45" step="0.5" required />
+              </div>
+            </div>
+
+            <div class="form-section-title">2. Loan Specifics</div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="loan_amnt">Requested Loan Amount ($)</label>
+                <input type="number" id="loan_amnt" name="loan_amnt" min="500" max="100000" step="1000" required />
+              </div>
+              <div class="form-group">
+                <label for="loan_intent">Loan Intent</label>
+                <select id="loan_intent" name="loan_intent">
+                  <option value="PERSONAL">PERSONAL</option>
+                  <option value="EDUCATION">EDUCATION</option>
+                  <option value="MEDICAL">MEDICAL</option>
+                  <option value="VENTURE">VENTURE</option>
+                  <option value="HOMEIMPROVEMENT">HOMEIMPROVEMENT</option>
+                  <option value="DEBTCONSOLIDATION">DEBTCONSOLIDATION</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="loan_grade">Loan Grade</label>
+                <select id="loan_grade" name="loan_grade">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                  <option value="E">E</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="loan_int_rate">Interest Rate (%)</label>
+                <input type="number" id="loan_int_rate" name="loan_int_rate" min="4" max="35" step="0.25" required />
+              </div>
+            </div>
+
+            <div class="form-section-title">3. Credit History</div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="cb_person_default_on_file">Historical Default on File?</label>
+                <select id="cb_person_default_on_file" name="cb_person_default_on_file">
+                  <option value="N">N — No</option>
+                  <option value="Y">Y — Yes</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cb_person_cred_hist_length">Credit History Length (Years)</label>
+                <input type="number" id="cb_person_cred_hist_length" name="cb_person_cred_hist_length" min="0" max="40" step="1" required />
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+              <span class="btn-text">⚡ Run Real-Time Credit Risk Evaluation</span>
+              <span class="btn-spinner hidden" id="btn-spinner"></span>
+            </button>
+          </form>
+        </div>
+
+        <!-- RIGHT: Result Panel -->
+        <div class="result-col">
+          <h2 class="section-title">🎯 Real-Time Decision &amp; Risk Profile</h2>
+
+          <!-- Placeholder state -->
+          <div class="result-placeholder" id="result-placeholder">
+            <div class="placeholder-icon">📋</div>
+            <p>Fill out the form and submit to see the instant risk evaluation.</p>
+          </div>
+
+          <!-- Result card (hidden until response) -->
+          <div class="result-card hidden" id="result-card">
+
+            <div class="risk-card-header">
+              <span class="risk-card-label">OVERALL RISK TIER</span>
+              <span class="badge-pill" id="risk-badge">—</span>
+            </div>
+
+            <div class="score-row">
+              <div class="score-circle" id="score-circle">—%</div>
+              <div class="score-meta">
+                Estimated Default Probability<br/>
+                <strong id="credit-health-label">Credit Health Score: — / 100</strong>
+              </div>
+            </div>
+
+            <div class="score-bar-track">
+              <div class="score-bar-fill" id="score-bar-fill"></div>
+            </div>
+
+            <hr class="divider" />
+
+            <div class="action-label" id="action-label">ACTION: —</div>
+            <div class="recommendation-text" id="recommendation-text">—</div>
+
+            <!-- Financial Ratios -->
+            <hr class="divider" />
+            <div class="ratios-title">📐 Evaluated Financial Ratios</div>
+            <div class="ratios-grid">
+              <div class="ratio-card">
+                <div class="ratio-label">Debt-to-Income (DTI)</div>
+                <div class="ratio-value" id="dti-value">—</div>
+                <div class="ratio-delta" id="dti-delta">—</div>
+              </div>
+              <div class="ratio-card">
+                <div class="ratio-label">Annual Interest Obligation</div>
+                <div class="ratio-value" id="interest-value">—</div>
+                <div class="ratio-delta" id="interest-delta">—</div>
+              </div>
+            </div>
+
+            <!-- Risk Drivers -->
+            <hr class="divider" />
+            <div class="ratios-title">🔍 Primary Risk Drivers</div>
+            <ul class="factors-list" id="factors-list"></ul>
+
+            <div class="model-caption" id="model-caption">🤖 Powered by — Pipeline</div>
+          </div>
+
+          <!-- Error card -->
+          <div class="error-card hidden" id="error-card">
+            <span class="error-icon">⚠️</span>
+            <span id="error-text">An error occurred.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░ TAB 2 — MODEL METRICS ░░░░░░░░░░░░░░░░░░░░ -->
+    <section class="tab-panel" id="panel-metrics" role="tabpanel" aria-labelledby="tab-metrics">
+      <h2 class="section-title">🏆 Machine Learning Model Benchmark Comparison</h2>
+      <p class="section-desc">Each candidate model was trained and evaluated on an independent 20% stratified test split:</p>
+
+      <div id="metrics-loading" class="loading-state">
+        <div class="spinner"></div>
+        <span>Loading benchmark data…</span>
+      </div>
+
+      <div id="metrics-content" class="hidden">
+        <div class="table-wrapper">
+          <table class="metrics-table" id="metrics-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1 Score</th>
+                <th>ROC-AUC</th>
+              </tr>
+            </thead>
+            <tbody id="metrics-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="best-model-banner" id="best-model-banner"></div>
+
+        <div class="chart-container">
+          <canvas id="metrics-chart" aria-label="Model Metric Comparison Bar Chart" role="img"></canvas>
+        </div>
+      </div>
+
+      <div id="metrics-error" class="error-card hidden">
+        <span class="error-icon">⚠️</span>
+        <span id="metrics-error-text">Could not load metrics.</span>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░░░░░░░░░░░ TAB 3 — PIPELINE ░░░░░░░░░░░░░░░░░░░░ -->
+    <section class="tab-panel" id="panel-pipeline" role="tabpanel" aria-labelledby="tab-pipeline">
+      <h2 class="section-title">🔄 End-to-End ML Pipeline Architecture</h2>
+      <p class="section-desc">The system follows a strict modular design guaranteeing reproducibility, data hygiene, and sub-second inference:</p>
+
+      <div class="pipeline-grid">
+        <div class="pipeline-step" style="--step-color: #6366f1;">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Kaggle Dataset</div>
+            <div class="step-desc">Loaded raw dataset containing 32,581 loan records across 12 behavioral and financial attributes.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #8b5cf6;">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Data Cleaning</div>
+            <div class="step-desc">Filtered impossible anomalies (ages &gt; 90, employment tenure &gt; 50 yrs). Imputed missing values with median values grouped by loan grade.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #06b6d4;">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Exploratory Analysis</div>
+            <div class="step-desc">Assessed distribution of target <code>loan_status</code> (imbalanced default distribution) and multi-collinearity.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #10b981;">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Feature Engineering</div>
+            <div class="step-desc">Constructed domain ratios: <code>loan_percent_income</code>, <code>interest_burden</code>, <code>cred_hist_to_age_ratio</code>, <code>loan_to_emp_ratio</code>, and <code>is_high_risk_intent</code>.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #f59e0b;">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Data Preprocessing</div>
+            <div class="step-desc">Built Scikit-Learn <code>ColumnTransformer</code>: <code>StandardScaler</code> for numeric columns, <code>OneHotEncoder</code> for categoricals.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #f97316;">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <div class="step-title">Train / Test Split</div>
+            <div class="step-desc">80/20 Stratified Split preserving the true proportion of loan defaults across splits.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #ef4444;">
+          <div class="step-num">7</div>
+          <div class="step-body">
+            <div class="step-title">ML Models Trained</div>
+            <div class="step-desc">Trained Logistic Regression, Random Forest, Gradient Boosting, and HistGradientBoosting classifiers.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #ec4899;">
+          <div class="step-num">8</div>
+          <div class="step-body">
+            <div class="step-title">Benchmark &amp; Selection</div>
+            <div class="step-desc">Ranked candidates by ROC-AUC and F1-score; selected and serialized the top-performing pipeline.</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #14b8a6;">
+          <div class="step-num">9</div>
+          <div class="step-body">
+            <div class="step-title">Risk Probability &amp; Tiers</div>
+            <div class="step-desc">Mapped raw probabilities into actionable business risk tiers: Low (&lt;25%), Medium (25–60%), High (≥60%).</div>
+          </div>
+        </div>
+        <div class="pipeline-step" style="--step-color: #6366f1;">
+          <div class="step-num">10</div>
+          <div class="step-body">
+            <div class="step-title">Flask Web App</div>
+            <div class="step-desc">Delivered a real-time reactive monitoring dashboard for live loan underwriting and credit analysis.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Real-Time Credit Risk Monitor &nbsp;•&nbsp; ML-Powered &nbsp;•&nbsp; <span id="footer-year"></span></p>
+  </footer>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
