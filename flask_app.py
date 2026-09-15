@@ -70,7 +70,7 @@ def predict():
     int_rate  = payload['loan_int_rate']
     loan_grade = payload['loan_grade']
 
-    dti             = round((loan_amnt / income) * 100, 2) if income > 0 else 0
+    dti             = round(min((loan_amnt / income) * 100, 9999.9), 1) if income > 0 else 0
     annual_interest = round(loan_amnt * (int_rate / 100), 2)
 
     # Risk drivers

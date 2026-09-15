@@ -175,11 +175,16 @@ function renderResult(data) {
 
   document.getElementById('recommendation-text').textContent = data.recommendation;
 
-  // DTI
+  // DTI — cap display at 999.9% to avoid confusing huge numbers
   const dti = data.dti;
-  document.getElementById('dti-value').textContent = `${dti.toFixed(1)}%`;
-  document.getElementById('dti-delta').textContent =
-    dti <= 20 ? '✅ Optimal (< 20%)' : dti <= 40 ? '⚠️ Elevated' : '🔴 High Risk (> 40%)';
+  const dtiDisplay = dti > 999.9 ? '>999%' : `${dti.toFixed(1)}%`;
+  const dtiLabel =
+    dti <= 20  ? '✅ Optimal (< 20%)' :
+    dti <= 40  ? '⚠️ Elevated (20–40%)' :
+    dti <= 100 ? '🔴 High Risk (> 40%)' :
+                 '🔴 Extreme — Loan far exceeds annual income';
+  document.getElementById('dti-value').textContent = dtiDisplay;
+  document.getElementById('dti-delta').textContent = dtiLabel;
 
   // Annual interest
   document.getElementById('interest-value').textContent =
